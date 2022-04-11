@@ -1,2 +1,2 @@
 # GDY1-2022-Side-Scroller-Mock
-Hello, I am your father.
+Side-scroller Unity project for trainers
