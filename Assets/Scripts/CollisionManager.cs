@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollisionLessons : MonoBehaviour
+public class CollisionManager : MonoBehaviour
 {
     public LayerMask whatIsGround;
 
     public float lengthToDetectGround = 0.5f;
     public float boxLength = 2f;
 
+    public Transform groundDetectorL;
+    public Transform groundDetectorR;
+
     Vector2 boxSize;
     public bool isGrounded;
-
-    public Transform point1;
-    public Transform point2;
 
     // Start is called before the first frame update
     void Start()
@@ -25,10 +25,10 @@ public class CollisionLessons : MonoBehaviour
     void Update()
     {
         //CheckGroundusingOverlapBox();
-        CheckGroundusingOverlapPoint();
+        CheckGroundUsingOverlapPoint();
     }
 
-    void CheckGroundusingSingleRaycast()
+    void CheckGroundUsingSingleRaycast()
     {
         //RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down) Only origin and direction
 
@@ -42,7 +42,7 @@ public class CollisionLessons : MonoBehaviour
         }
     }
 
-    void CheckGroundusingOverlapBox()
+    void CheckGroundUsingOverlapBox()
     {
         Vector2 boxCenter = (Vector2)transform.position + (Vector2.down * boxSize.y * 0.5f);
 
@@ -55,9 +55,9 @@ public class CollisionLessons : MonoBehaviour
 
     }
 
-    void CheckGroundusingOverlapPoint()
+    void CheckGroundUsingOverlapPoint()
     {
-        isGrounded = Physics2D.OverlapPoint(point1.position, whatIsGround) != null || Physics2D.OverlapPoint(point2.position, whatIsGround) != null;
+        isGrounded = Physics2D.OverlapPoint(groundDetectorL.position, whatIsGround) != null || Physics2D.OverlapPoint(groundDetectorR.position, whatIsGround) != null;
 
         if (isGrounded)
         {
