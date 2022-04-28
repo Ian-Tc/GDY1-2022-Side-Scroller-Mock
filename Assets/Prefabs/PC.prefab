@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &934589647
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 934589648}
+  m_Layer: 3
+  m_Name: FireTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &934589648
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934589647}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1451997461}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1286965842
 GameObject:
   m_ObjectHideFlags: 0
@@ -30,6 +61,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8759074441341100190}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1451997460
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1451997461}
+  m_Layer: 3
+  m_Name: Pivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1451997461
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451997460}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 934589648}
+  m_Father: {fileID: 8759074441341100190}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1963932087
 GameObject:
@@ -73,7 +136,7 @@ GameObject:
   - component: {fileID: 8759074441341100190}
   - component: {fileID: 7528321719144321697}
   - component: {fileID: 1517176539}
-  - component: {fileID: 36434421}
+  - component: {fileID: 4057966083539004205}
   m_Layer: 3
   m_Name: PC
   m_TagString: Untagged
@@ -96,6 +159,7 @@ Transform:
   - {fileID: 5863634542311378074}
   - {fileID: 1286965843}
   - {fileID: 1963932088}
+  - {fileID: 1451997461}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -136,7 +200,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.5}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &36434421
+--- !u!114 &4057966083539004205
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,17 +209,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 1140340060985580187}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd5ff86f4348b142a5115fa0a5f34ad, type: 3}
+  m_Script: {fileID: 11500000, guid: 33a8271b8b808204e8f2f298a797b1e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 5
+  jumpForce: 10
+  moveHorizontal: 0
+  moveJump: 0
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
-  lengthToDetectGround: 0.5
+  lengthToDetectGround: 1
   boxLength: 2
-  groundDetectorL: {fileID: 1286965843}
-  groundDetectorR: {fileID: 1963932088}
   isGrounded: 0
+  aimHorizontal: 0
+  aimVertical: 0
+  pivot: {fileID: 1451997461}
+  fireTransform: {fileID: 934589648}
+  bulletPrefab: {fileID: 7972810166061395068, guid: 02e051f7bdb9a964a80423067488174e, type: 3}
+  fireDelay: 0.1
+  isShooting: 0
+  standShootInput: 0
+  counter: 3
+  nextFire: 0
+  fireRate: 0.5
 --- !u!1 &5863634542311378072
 GameObject:
   m_ObjectHideFlags: 0

@@ -235,8 +235,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 457553461}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.25, y: 0.5, z: 0}
-  m_LocalScale: {x: 30, y: 12, z: 20}
+  m_LocalPosition: {x: -1.2576855, y: 0.58, z: 0}
+  m_LocalScale: {x: 29.288609, y: 11.3598795, z: 20.654325}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -927,11 +927,15 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
+<<<<<<< HEAD
 <<<<<<< Updated upstream
     m_SensorSize: {x: 0.9365352, y: 1}
 =======
     m_SensorSize: {x: 1.781915, y: 1}
 >>>>>>> Stashed changes
+=======
+    m_SensorSize: {x: 0.90937996, y: 1}
+>>>>>>> parent of 38ff150 (Nothing significant made (tested tilemap and sprite shape, then deleted everything))
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
