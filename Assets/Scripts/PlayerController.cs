@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    //The States
+    public enum PlayerStates
+    {
+        IDLE,
+        RUN,
+        INAIR,
+        STUNGRENADE,
+        ROCKETLAUNCHER,
+        RAILGUN,
+        AIRSTRIKE
+    }
+
+    public PlayerStates pStates;
+
     //Movement
     public float moveSpeed;
     public float jumpForce;
@@ -35,7 +49,10 @@ public class PlayerController : MonoBehaviour
     public float nextFire = 0f;
     public float fireRate = 0.5f;
 
-    
+    private void Awake()
+    {
+        pStates = PlayerStates.IDLE;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -48,24 +65,65 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         CheckGroundusingOverlapBox();
-        moveHorizontal = Input.GetAxisRaw("LeftAnalogX");
-        moveJump = Input.GetButtonDown("Jump");
-        standShootInput = Input.GetButton("Fire1");
-        aimHorizontal = Input.GetAxisRaw("RightAnalogX");
-        aimVertical = Input.GetAxisRaw("RightAnalogY");
 
-        Move();
+        if (GameManager.instance.gStates == GameManager.GameStates.GAMEPLAY)
+        {
+            moveHorizontal = Input.GetAxisRaw("LeftAnalogX");
+            moveJump = Input.GetButtonDown("Jump");
+            standShootInput = Input.GetButton("Fire1");
+            aimHorizontal = Input.GetAxisRaw("RightAnalogX");
+            aimVertical = Input.GetAxisRaw("RightAnalogY");
+        }
+        else if (GameManager.instance.gStates != GameManager.GameStates.GAMEPLAY)
+        {
+            moveHorizontal = 0f;
+            moveJump = false;
+            standShootInput = false;
+            aimHorizontal = 0f;
+            aimVertical = 0f;
+        }
+        
 
-        //if (!isMoving() && standShootInput && isGrounded && !isShooting && Time.time > nextFire)
-        //{
-            
-        //    StartCoroutine(StandShoot());
-        //    isShooting = true;
-        //}
-        //else if (!standShootInput || isMoving())
-        //{
-        //    isShooting = false;
-        //}
+        switch (pStates)
+        {
+            case PlayerStates.IDLE:
+
+                if (moveHorizontal != 0)
+                {
+                    pStates = PlayerStates.RUN;
+                }
+
+                break;
+
+            case PlayerStates.RUN:
+                Move();
+
+                if (moveHorizontal == 0)
+                {
+                    pStates = PlayerStates.IDLE;
+                }
+
+                break;
+
+            case PlayerStates.INAIR:
+                Move();
+                break;
+
+            case PlayerStates.STUNGRENADE:
+                break;
+
+            case PlayerStates.ROCKETLAUNCHER:
+                break;
+
+            case PlayerStates.RAILGUN:
+                break;
+
+            case PlayerStates.AIRSTRIKE:
+                break;
+        }
+
+        
+
 
         if (!isMoving() && standShootInput && isGrounded && Time.time > nextFire)
         {
@@ -92,8 +150,20 @@ public class PlayerController : MonoBehaviour
 
         if (isGrounded)
         {
-            Debug.Log("I have fallen");
+            if (moveHorizontal != 0)
+            {
+                pStates = PlayerStates.RUN;
+            }
+            else if(moveHorizontal == 0)
+            {
+                pStates = PlayerStates.IDLE;
+            }
         }
+        else if(!isGrounded)
+        {
+            pStates = PlayerStates.INAIR;
+        }
+
 
     }
 
@@ -151,5 +221,13 @@ public class PlayerController : MonoBehaviour
     {
         aimAngle = Mathf.Rad2Deg * Mathf.Atan2(aimVertical, aimHorizontal);
         pivot.rotation = Quaternion.Euler(0f,0f, aimAngle);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("LevelTrigger"))
+        {
+            GameManager.instance.gStates = GameManager.GameStates.LEVELOUTRO;
+        }
     }
 }
