@@ -42,3 +42,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Playground
+    uniqueID: 2477622843
+    locked: 0
+  - name: Characters
+    uniqueID: 1823787813
+    locked: 0
