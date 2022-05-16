@@ -49,9 +49,13 @@ public class PlayerController : MonoBehaviour
     public float nextFire = 0f;
     public float fireRate = 0.5f;
 
+    //Animation
+    Animator playerAnim;
+
     private void Awake()
     {
         pStates = PlayerStates.IDLE;
+        playerAnim = GetComponentInChildren<Animator>();
     }
 
     // Start is called before the first frame update
@@ -82,12 +86,21 @@ public class PlayerController : MonoBehaviour
             aimHorizontal = 0f;
             aimVertical = 0f;
         }
+
+        playerAnim.SetFloat("HorizontalVelocity", moveSpeed * Mathf.Abs(moveHorizontal));
+        playerAnim.SetBool("isGrounded", isGrounded);
+
+       
         
 
         switch (pStates)
         {
             case PlayerStates.IDLE:
 
+                //if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Player_Idle"))
+                //{
+                //    playerAnim.Play("Player_Idle");
+                //}
                 if (moveHorizontal != 0)
                 {
                     pStates = PlayerStates.RUN;
@@ -97,7 +110,10 @@ public class PlayerController : MonoBehaviour
 
             case PlayerStates.RUN:
                 Move();
-
+                //if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Player_Run"))
+                //{
+                //    playerAnim.Play("Player_Run");
+                //}
                 if (moveHorizontal == 0)
                 {
                     pStates = PlayerStates.IDLE;
@@ -230,4 +246,6 @@ public class PlayerController : MonoBehaviour
             GameManager.instance.gStates = GameManager.GameStates.LEVELOUTRO;
         }
     }
+
+    
 }
