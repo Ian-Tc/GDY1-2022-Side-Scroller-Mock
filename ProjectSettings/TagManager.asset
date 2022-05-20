@@ -48,3 +48,6 @@ TagManager:
   - name: Characters
     uniqueID: 1823787813
     locked: 0
+  - name: FadeScreen
+    uniqueID: 1919036315
+    locked: 0

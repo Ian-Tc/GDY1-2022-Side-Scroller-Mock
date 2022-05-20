@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Playables;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,6 +23,9 @@ public class GameManager : MonoBehaviour
     //Game UI
     public GameObject pauseMenu;
 
+    public PlayableDirector timelineDirector;
+    bool subscibeCheck;
+
     public void Awake()
     {
         if (instance == null)
@@ -33,7 +37,11 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        gStates = GameStates.GAMEPLAY;
+        gStates = GameStates.LEVELINTRO;
+        
+        StartTimeLine();
+        subscibeCheck = true;
+        timelineDirector.stopped += EndTimeLine;
         GameUnpause();
     }
 
@@ -46,7 +54,12 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GameStates.GAMEPLAY:
-                
+                if (subscibeCheck)
+                {
+                    subscibeCheck = false;
+                    timelineDirector.stopped -= EndTimeLine;
+                }
+
                 CheckForPauseInput();
                 break;
 
@@ -144,5 +157,20 @@ public class GameManager : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public void DisableGameObject(GameObject obj)
+    {
+        obj.SetActive(false);
+    }
+
+    public void StartTimeLine()
+    {
+        timelineDirector.Play();
+    }
+
+    public void EndTimeLine(PlayableDirector obj)
+    {
+        gStates = GameStates.GAMEPLAY;
     }
 }
