@@ -52,6 +52,8 @@ public class PlayerController : MonoBehaviour
     //Animation
     Animator playerAnim;
 
+    bool soundCheckRun;
+
     private void Awake()
     {
         pStates = PlayerStates.IDLE;
@@ -96,7 +98,11 @@ public class PlayerController : MonoBehaviour
         switch (pStates)
         {
             case PlayerStates.IDLE:
-
+                soundCheckRun = false;
+                if (AudioManager.instance.IsPlaying("FootstepSFX"))
+                {
+                    AudioManager.instance.StopSound("FootstepSFX");
+                }
                 //if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Player_Idle"))
                 //{
                 //    playerAnim.Play("Player_Idle");
@@ -110,6 +116,12 @@ public class PlayerController : MonoBehaviour
 
             case PlayerStates.RUN:
                 Move();
+
+                if (!AudioManager.instance.IsPlaying("FootstepSFX"))
+                {
+                    AudioManager.instance.PlaySound("FootstepSFX");
+                }
+                
                 //if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Player_Run"))
                 //{
                 //    playerAnim.Play("Player_Run");
@@ -188,6 +200,7 @@ public class PlayerController : MonoBehaviour
         if (moveHorizontal > 0.1f || moveHorizontal < -0.1f)
         {
             playerRB.velocity = new Vector2(moveSpeed * moveHorizontal, playerRB.velocity.y);
+            
         }
       
     }
